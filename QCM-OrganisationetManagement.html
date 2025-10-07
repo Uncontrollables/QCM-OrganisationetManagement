@@ -1,0 +1,1300 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCM - Organisation et Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const CheckIcon = () => (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+        );
+
+        const XIcon = () => (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        );
+
+        const RefreshIcon = () => (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+        );
+
+        const AwardIcon = () => (
+            <svg className="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            </svg>
+        );
+
+        const QCMOrganisation = () => {
+            const allQuestions = [
+                {
+                    id: 1,
+                    question: "Lorsqu’on commande un bureau chez un artisan ébéniste, la production :",
+                    options: [
+                        "A. se fait en flux tirés",
+                        "B. se fait en flux continus",
+                        "C. se fait en flux poussés",
+                        "D. se fait en grandes séries"
+                    ],
+                    correct: [0],
+                    explication: "La production est tirée par la commande du client (flux tirés)."
+                },
+                {
+                    id: 2,
+                    question: "Pour Weber, l'autorité charismatique :",
+                    options: [
+                        "A. Est la meilleure forme, car elle est la plus stable sur la durée",
+                        "B. N'est pas la meilleure forme, car elle est instable sur la durée",
+                        "C. N'est pas la meilleure forme, car elle se transmet de manière traditionnelle",
+                        "D. Est la meilleure forme, car elle repose sur les qualités personnelles du leader"
+                    ],
+                    correct: [1],
+                    explication: "L'autorité charismatique est instable car elle dépend de la personne du leader et nécessite une routinisation."
+                },
+                {
+                    id: 3,
+                    question: "Dans l'organisation divisionnelle pour Mintzberg, le principal mécanisme de coordination repose :",
+                    options: [
+                        "A. Sur la centralisation",
+                        "B. Sur la subordination",
+                        "C. Sur les qualifications",
+                        "D. Sur les résultats"
+                    ],
+                    correct: [3],
+                    explication: "Dans la structure divisionnelle, la coordination se fait par standardisation des outputs (résultats)."
+                },
+                {
+                    id: 4,
+                    question: "La norme ISO 9001 concerne :",
+                    options: [
+                        "A. la qualité",
+                        "B. le social",
+                        "C. l'environnement",
+                        "D. le temps"
+                    ],
+                    correct: [0],
+                    explication: "ISO 9001 est la norme internationale pour les systèmes de management de la qualité."
+                },
+                {
+                    id: 5,
+                    question: "Pour Chandler, quel principal élément doit évoluer en fonction de la stratégie ?",
+                    options: [
+                        "A. La bureaucratie",
+                        "B. La structure",
+                        "C. La direction",
+                        "D. La planification"
+                    ],
+                    correct: [1],
+                    explication: "Selon Chandler, 'la structure suit la stratégie'."
+                },
+                {
+                    id: 6,
+                    question: "Parmi les affirmations suivantes, laquelle est fausse ?",
+                    options: [
+                        "A. Les salariés représentent des parties prenantes internes",
+                        "B. La notion de parties prenantes a été proposée par Chandler",
+                        "C. Les syndicats sont des parties prenantes de l'organisation",
+                        "D. Les parties prenantes d'une même organisation peuvent avoir des attentes contradictoires"
+                    ],
+                    correct: [1],
+                    explication: "La notion de parties prenantes (stakeholders) a été introduite par R. Edward Freeman, non par Chandler."
+                },
+                {
+                    id: 7,
+                    question: "La capacité à faire du profit est appelée :",
+                    options: [
+                        "A. rentabilité",
+                        "B. productivité",
+                        "C. efficacité",
+                        "D. profitabilité"
+                    ],
+                    correct: [3],
+                    explication: "La profitabilité désigne la capacité d'une organisation à générer du profit."
+                },
+                {
+                    id: 8,
+                    question: "Quelle affirmation est vraie ?",
+                    options: [
+                        "A. La structure matricielle fait partie des structures les plus flexibles",
+                        "B. La structure matricielle conduit à du gaspillage",
+                        "C. Elle est adaptée aux petites entreprises",
+                        "D. Elle convient aux monoactivités"
+                    ],
+                    correct: [0],
+                    explication: "La structure matricielle est flexible grâce à sa double dimension fonctionnelle et projet."
+                },
+                {
+                    id: 9,
+                    question: "L'université de Nanterre peut être assimilée à :",
+                    options: [
+                        "A. Une structure divisionnalisée",
+                        "B. Une structure mécaniste",
+                        "C. Une structure professionnelle",
+                        "D. Une organisation innovatrice"
+                    ],
+                    correct: [2],
+                    explication: "Les universités correspondent à la bureaucratie professionnelle de Mintzberg, basée sur les qualifications."
+                },
+                {
+                    id: 10,
+                    question: "Pour Blake et Mouton, le manager (9,9) met en place un système :",
+                    options: [
+                        "A. qui repose sur la collaboration",
+                        "B. qui repose sur la spécialisation",
+                        "C. qui repose sur la centralisation",
+                        "D. qui repose sur la hiérarchisation"
+                    ],
+                    correct: [0],
+                    explication: "Le style (9,9) est le management d'équipe, axé sur la haute préoccupation pour les personnes et la production, favorisant la collaboration."
+                },
+                {
+                    id: 11,
+                    question: "Les start-ups sont :",
+                    options: [
+                        "A. Des organisations innovantes",
+                        "B. Des organisations professionnelles",
+                        "C. Des organisations divisionnalisées",
+                        "D. Des organisations missionnaires"
+                    ],
+                    correct: [0],
+                    explication: "Les start-ups correspondent souvent à des adhocraties ou organisations innovantes selon Mintzberg."
+                },
+                {
+                    id: 12,
+                    question: "La structure divisionnelle est adaptée :",
+                    options: [
+                        "A. Aux produits hétérogènes",
+                        "B. Aux petites organisations",
+                        "C. Aux structures centralisées",
+                        "D. Aux produits standardisés"
+                    ],
+                    correct: [0],
+                    explication: "La divisionnelle convient aux environnements complexes avec produits diversifiés."
+                },
+                {
+                    id: 13,
+                    question: "La GPEC correspond à une gestion :",
+                    options: [
+                        "A. Prévisionnelle",
+                        "B. Productive",
+                        "C. Performante",
+                        "D. Planifiée"
+                    ],
+                    correct: [0],
+                    explication: "GPEC = Gestion Prévisionnelle des Emplois et des Compétences."
+                },
+                {
+                    id: 14,
+                    question: "Le concepteur de l’OST est :",
+                    options: [
+                        "A. Taylor",
+                        "B. Weber",
+                        "C. Fayol",
+                        "D. Mayo"
+                    ],
+                    correct: [0],
+                    explication: "OST = Organisation Scientifique du Travail, théorisée par Frederick Taylor."
+                },
+                {
+                    id: 15,
+                    question: "La S.A. est :",
+                    options: [
+                        "A. Une entreprise sociétaire",
+                        "B. Une entreprise à but non lucratif",
+                        "C. Une entreprise sociale et solidaire",
+                        "D. Une entreprise individuelle"
+                    ],
+                    correct: [0],
+                    explication: "La Société Anonyme (S.A.) est une forme sociétaire de société de capitaux."
+                },
+                {
+                    id: 16,
+                    question: "Le P de GPEC correspond à :",
+                    options: [
+                        "A. planifiée",
+                        "B. productive",
+                        "C. performante",
+                        "D. prévisionnelle"
+                    ],
+                    correct: [3],
+                    explication: "GPEC = Gestion Prévisionnelle des Emplois et des Compétences."
+                },
+                {
+                    id: 17,
+                    question: "ODD signifie :",
+                    options: [
+                        "A. Objectifs de développement durable",
+                        "B. Organisations divisionnalisées durables",
+                        "C. Organisations divisionnelles décentralisées",
+                        "D. Objectifs durables de décentralisation"
+                    ],
+                    correct: [0],
+                    explication: "Les ODD sont les 17 Objectifs de Développement Durable adoptés par l'ONU."
+                },
+                {
+                    id: 18,
+                    question: "Lorsqu’un distributeur ne vend que nos produits, la distribution est :",
+                    options: [
+                        "A. abusive",
+                        "B. intensive",
+                        "C. exclusive",
+                        "D. sélective"
+                    ],
+                    correct: [2],
+                    explication: "La distribution exclusive limite le distributeur à un seul fournisseur."
+                },
+                {
+                    id: 19,
+                    question: "Une entreprise politisée :",
+                    options: [
+                        "A. Les membres poursuivent leurs intérêts personnels",
+                        "B. Les membres partagent la même idéologie",
+                        "C. Les décisions sont centralisées",
+                        "D. La hiérarchie est réduite"
+                    ],
+                    correct: [0],
+                    explication: "Dans une organisation politisée (Mintzberg), les luttes de pouvoir et intérêts personnels dominent."
+                },
+                {
+                    id: 20,
+                    question: "Dans le modèle de Greiner, la phase de coordination peut conduire à :",
+                    options: [
+                        "A. Une crise de bureaucratie",
+                        "B. Une crise de standardisation",
+                        "C. Une crise de procédures",
+                        "D. Une crise de qualifications"
+                    ],
+                    correct: [1],
+                    explication: "La phase de coordination mène à une crise de red tape (standardisation excessive)."
+                },
+                {
+                    id: 21,
+                    question: "Dans l’acronyme SMART, le M renvoie à :",
+                    options: [
+                        "A. métier",
+                        "B. mission",
+                        "C. mesure",
+                        "D. management"
+                    ],
+                    correct: [2],
+                    explication: "SMART : Spécifique, Mesurable, Atteignable, Pertinent, Temporellement défini."
+                },
+                {
+                    id: 22,
+                    question: "Dans les Restos du cœur, la coordination se fait par :",
+                    options: [
+                        "A. Des procédés de travail",
+                        "B. Des valeurs partagées",
+                        "C. Supervision directe",
+                        "D. Haute compétence"
+                    ],
+                    correct: [1],
+                    explication: "Les Restos du Cœur sont une organisation missionnaire, coordonnée par idéologie et valeurs partagées."
+                },
+                {
+                    id: 23,
+                    question: "Les ressources humaines sont considérées comme :",
+                    options: [
+                        "A. Stratégiques",
+                        "B. Fonctionnelles",
+                        "C. Contraignantes",
+                        "D. Banales"
+                    ],
+                    correct: [0],
+                    explication: "Les RH sont une ressource stratégique clé pour la compétitivité."
+                },
+                {
+                    id: 24,
+                    question: "Pour Likert, la meilleure forme de management repose sur :",
+                    options: [
+                        "A. La participation à la prise de décision",
+                        "B. L’exécution stricte",
+                        "C. L’autonomie totale",
+                        "D. La centralisation"
+                    ],
+                    correct: [0],
+                    explication: "Le système 4 de Likert est participatif et impliquant."
+                },
+                {
+                    id: 25,
+                    question: "Quelle affirmation est vraie ?",
+                    options: [
+                        "A. Les décisions stratégiques impactent la structure",
+                        "B. Les décisions tactiques sont irréversibles",
+                        "C. Les décisions opérationnelles engagent l’entreprise sur le long terme",
+                        "D. Les executives managers prennent des décisions opérationnelles"
+                    ],
+                    correct: [0],
+                    explication: "Les décisions stratégiques définissent et impactent la structure organisationnelle."
+                },
+                {
+                    id: 26,
+                    question: "Les structures mécanistes :",
+                    options: [
+                        "A. Évoluent dans un environnement stable",
+                        "B. Sont très flexibles",
+                        "C. Sont innovantes",
+                        "D. Ont une coordination horizontale"
+                    ],
+                    correct: [0],
+                    explication: "Les structures mécanistes conviennent aux environnements stables et prévisibles."
+                },
+                {
+                    id: 27,
+                    question: "Pour Fayol, le manager doit :",
+                    options: [
+                        "A. Prévoir, organiser, coordonner, contrôler",
+                        "B. Communiquer, déléguer, superviser",
+                        "C. Créer, stimuler, mesurer",
+                        "D. Planifier, exécuter, décider"
+                    ],
+                    correct: [0],
+                    explication: "Fayol : prévoir, organiser, commander, coordonner, contrôler (les options omettent commander mais proche)."
+                },
+                {
+                    id: 28,
+                    question: "La capacité d'une organisation à façonner son environnement est appelée :",
+                    options: [
+                        "A. réactivité",
+                        "B. centralisation",
+                        "C. proactivité",
+                        "D. flexibilité"
+                    ],
+                    correct: [2],
+                    explication: "La proactivité permet d'anticiper et influencer l'environnement."
+                },
+                {
+                    id: 29,
+                    question: "La structure matricielle est :",
+                    options: [
+                        "A. Flexible",
+                        "B. Stable",
+                        "C. Hiérarchisée",
+                        "D. Standardisée"
+                    ],
+                    correct: [0],
+                    explication: "La matricielle est flexible pour gérer la complexité."
+                },
+                {
+                    id: 30,
+                    question: "Pour Chandler, la structure suit :",
+                    options: [
+                        "A. La stratégie",
+                        "B. Le marché",
+                        "C. Le contrôle",
+                        "D. La culture"
+                    ],
+                    correct: [0],
+                    explication: "'Structure follows strategy' de Chandler."
+                },
+                {
+                    id: 31,
+                    question: "Dans quel type de structure les salariés ont deux chefs ?",
+                    options: [
+                        "A. Matricielle",
+                        "B. Divisionnelle",
+                        "C. Fonctionnelle",
+                        "D. Entrepreneuriale"
+                    ],
+                    correct: [0],
+                    explication: "La structure matricielle implique une double hiérarchie (fonctionnelle et projet)."
+                },
+                {
+                    id: 32,
+                    question: "Le manager (1,1) chez Blake et Mouton adopte un style :",
+                    options: [
+                        "A. Appauvri",
+                        "B. Démocratique",
+                        "C. Participatif",
+                        "D. Collaboratif"
+                    ],
+                    correct: [0],
+                    explication: "Le style (1,1) est appauvri : faible souci pour les personnes et la production."
+                },
+                {
+                    id: 33,
+                    question: "La réduction du nombre de niveaux hiérarchiques :",
+                    options: [
+                        "A. Accélère la prise de décision",
+                        "B. Diminue la motivation",
+                        "C. Augmente la parcellisation",
+                        "D. Crée des conflits"
+                    ],
+                    correct: [0],
+                    explication: "L'aplatissement hiérarchique (delayering) accélère les décisions."
+                },
+                {
+                    id: 34,
+                    question: "La gendarmerie est une organisation :",
+                    options: [
+                        "A. Du secteur public non marchand",
+                        "B. Du secteur privé non marchand",
+                        "C. Du secteur privé marchand",
+                        "D. Du secteur public marchand"
+                    ],
+                    correct: [0],
+                    explication: "La gendarmerie est un service public non marchand."
+                },
+                {
+                    id: 35,
+                    question: "Une forte spécialisation horizontale conduit à :",
+                    options: [
+                        "A. Une forte parcellisation",
+                        "B. Une forte polyvalence",
+                        "C. Une faible hiérarchisation",
+                        "D. Une décentralisation"
+                    ],
+                    correct: [0],
+                    explication: "La spécialisation horizontale divise les tâches, augmentant la parcellisation."
+                },
+                {
+                    id: 36,
+                    question: "Pour Blake et Mouton, le manager (9,9) vise :",
+                    options: [
+                        "A. La performance collective",
+                        "B. Le contrôle",
+                        "C. La centralisation",
+                        "D. La discipline"
+                    ],
+                    correct: [0],
+                    explication: "Le style (9,9) vise une haute performance via la collaboration collective."
+                },
+                {
+                    id: 37,
+                    question: "Le style de management de Tannenbaum et Schmidt est :",
+                    options: [
+                        "A. Adaptatif",
+                        "B. Participatif",
+                        "C. Directif",
+                        "D. Délégatif"
+                    ],
+                    correct: [0],
+                    explication: "Le continuum de Tannenbaum-Schmidt est adaptatif selon la maturité des subordonnés."
+                },
+                {
+                    id: 38,
+                    question: "Pour Hersey et Blanchard, un salarié novice doit être dirigé par un management :",
+                    options: [
+                        "A. Directif",
+                        "B. Collaboratif",
+                        "C. Participatif",
+                        "D. Délégatif"
+                    ],
+                    correct: [0],
+                    explication: "Pour un employé novice (faible maturité), le style directif (telling) est approprié."
+                },
+                {
+                    id: 39,
+                    question: "Parmi les affirmations suivantes, laquelle est vraie ?",
+                    options: [
+                        "A. Les associations peuvent recevoir des subventions publiques",
+                        "B. Elles vendent au-dessus du coût de production",
+                        "C. Elles sont régies par la loi de 1942",
+                        "D. Les membres ne se connaissent pas"
+                    ],
+                    correct: [0],
+                    explication: "Les associations loi 1901 peuvent recevoir des subventions publiques."
+                },
+                {
+                    id: 40,
+                    question: "Pour Mintzberg, la technostructure correspond à :",
+                    options: [
+                        "A. La définition des procédures",
+                        "B. La direction générale",
+                        "C. La production",
+                        "D. Le conseil"
+                    ],
+                    correct: [0],
+                    explication: "La technostructure conçoit les standards et procédures de travail."
+                },
+                {
+                    id: 41,
+                    question: "Les parties prenantes d'une organisation sont :",
+                    options: [
+                        "A. Ceux qui travaillent pour ou sont affectés par l’organisation",
+                        "B. Ceux qui fixent les objectifs",
+                        "C. Ceux qui financent uniquement",
+                        "D. Les dirigeants"
+                    ],
+                    correct: [0],
+                    explication: "Les stakeholders sont tous ceux affectés par ou affectant l'organisation."
+                },
+                {
+                    id: 42,
+                    question: "Une forte spécialisation horizontale peut conduire à :",
+                    options: [
+                        "A. Une forte parcellisation",
+                        "B. Une forte décentralisation",
+                        "C. Une faible hiérarchisation",
+                        "D. Une grande autonomie"
+                    ],
+                    correct: [0],
+                    explication: "Elle augmente la division des tâches, menant à une parcellisation."
+                },
+                {
+                    id: 43,
+                    question: "Les Restos du cœur se coordonnent principalement par :",
+                    options: [
+                        "A. Des valeurs partagées",
+                        "B. Une supervision directe",
+                        "C. Des règles",
+                        "D. La technostructure"
+                    ],
+                    correct: [0],
+                    explication: "Coordination par idéologie et valeurs partagées dans les organisations missionnaires."
+                },
+                {
+                    id: 44,
+                    question: "La structure entrepreneuriale présente comme inconvénient :",
+                    options: [
+                        "A. La dépendance au dirigeant",
+                        "B. La flexibilité",
+                        "C. La clarté hiérarchique",
+                        "D. La stabilité"
+                    ],
+                    correct: [0],
+                    explication: "La structure entrepreneuriale dépend fortement du leader central."
+                },
+                {
+                    id: 45,
+                    question: "L’enrichissement des tâches correspond à :",
+                    options: [
+                        "A. Moins de spécialisation verticale",
+                        "B. Plus de spécialisation horizontale",
+                        "C. Plus de spécialisation verticale",
+                        "D. Moins de spécialisation horizontale"
+                    ],
+                    correct: [3],
+                    explication: "L'enrichissement des tâches augmente la variété et réduit la spécialisation horizontale."
+                },
+                {
+                    id: 46,
+                    question: "Dans le modèle de Greiner, la phase de délégation conduit à :",
+                    options: [
+                        "A. Plus d’autonomie et une organisation insuffisamment contrôlée",
+                        "B. Plus de procédures",
+                        "C. Une crise de bureaucratie",
+                        "D. Une centralisation"
+                    ],
+                    correct: [0],
+                    explication: "La phase de délégation accorde plus d'autonomie, menant à une crise de contrôle."
+                },
+                {
+                    id: 47,
+                    question: "Les ressources humaines sont :",
+                    options: [
+                        "A. Des ressources stratégiques",
+                        "B. Des ressources contraintes",
+                        "C. Des ressources banales",
+                        "D. Des ressources accessoires"
+                    ],
+                    correct: [0],
+                    explication: "Les RH sont stratégiques pour l'avantage concurrentiel."
+                },
+                {
+                    id: 48,
+                    question: "Le plan de marchéage ne comprend pas :",
+                    options: [
+                        "A. Profit",
+                        "B. Produit",
+                        "C. Prix",
+                        "D. Promotion"
+                    ],
+                    correct: [0],
+                    explication: "Le marketing mix (4P) inclut Produit, Prix, Place, Promotion ; le profit n'en fait pas partie."
+                },
+                {
+                    id: 49,
+                    question: "Dans le rapport *Notre avenir à tous*, on trouve :",
+                    options: [
+                        "A. La première définition du développement durable",
+                        "B. L’agenda 21",
+                        "C. Les ODD",
+                        "D. La RSE"
+                    ],
+                    correct: [0],
+                    explication: "Le rapport Brundtland (1987) définit le développement durable."
+                },
+                {
+                    id: 50,
+                    question: "L’autorité charismatique selon Weber est :",
+                    options: [
+                        "A. Instable sur la durée",
+                        "B. Légitime par la tradition",
+                        "C. Basée sur la compétence",
+                        "D. Transmise"
+                    ],
+                    correct: [0],
+                    explication: "L'autorité charismatique est instable et repose sur les qualités personnelles du leader."
+                },
+                {
+                    id: 51,
+                    question: "Pour Likert, un bon management repose sur :",
+                    options: [
+                        "A. La participation",
+                        "B. L’obéissance",
+                        "C. L’autonomie",
+                        "D. Le contrôle"
+                    ],
+                    correct: [0],
+                    explication: "Likert privilégie la participation et l'implication des employés."
+                },
+                {
+                    id: 52,
+                    question: "L’organisation professionnelle repose sur :",
+                    options: [
+                        "A. La qualification des individus",
+                        "B. La centralisation",
+                        "C. Le contrôle hiérarchique",
+                        "D. La production standardisée"
+                    ],
+                    correct: [0],
+                    explication: "Coordination par standardisation des compétences dans la bureaucratie professionnelle."
+                },
+                {
+                    id: 53,
+                    question: "Une organisation mécaniste :",
+                    options: [
+                        "A. Est adaptée aux environnements stables",
+                        "B. Repose sur l’innovation",
+                        "C. Favorise l’autonomie",
+                        "D. Fonctionne sans règles"
+                    ],
+                    correct: [0],
+                    explication: "Les organisations mécanistes sont rigides et adaptées aux environnements stables."
+                },
+                {
+                    id: 54,
+                    question: "L’organigramme permet :",
+                    options: [
+                        "A. Une vision globale de la structure",
+                        "B. De représenter les relations informelles",
+                        "C. De décrire les fonctions",
+                        "D. De mesurer la performance"
+                    ],
+                    correct: [0],
+                    explication: "L'organigramme illustre la structure formelle et hiérarchique."
+                },
+                {
+                    id: 55,
+                    question: "La structure suit la stratégie selon :",
+                    options: [
+                        "A. Chandler",
+                        "B. Fayol",
+                        "C. Mintzberg",
+                        "D. Weber"
+                    ],
+                    correct: [0],
+                    explication: "Alfred Chandler a théorisé que la structure suit la stratégie."
+                },
+                {
+                    id: 56,
+                    question: "Le style de management appauvri :",
+                    options: [
+                        "A. Se désintéresse des hommes et des tâches",
+                        "B. Valorise la productivité",
+                        "C. Repose sur la hiérarchie",
+                        "D. Favorise la participation"
+                    ],
+                    correct: [0],
+                    explication: "Le style appauvri (1,1) montre un faible engagement envers les personnes et la production."
+                },
+                {
+                    id: 57,
+                    question: "Une entreprise individuelle a une responsabilité :",
+                    options: [
+                        "A. Non saisissable sur le patrimoine personnel",
+                        "B. Solidaire",
+                        "C. Limitée comme une SARL",
+                        "D. Collective"
+                    ],
+                    correct: [1],
+                    explication: "Dans l'entreprise individuelle, la responsabilité est solidaire entre patrimoine professionnel et personnel."
+                },
+                {
+                    id: 58,
+                    question: "Les décisions stratégiques :",
+                    options: [
+                        "A. Impactent la structure",
+                        "B. Sont réversibles",
+                        "C. Sont à court terme",
+                        "D. Ne concernent pas l’environnement"
+                    ],
+                    correct: [0],
+                    explication: "Les décisions stratégiques définissent la structure et l'orientation à long terme."
+                },
+                {
+                    id: 59,
+                    question: "La structure d’une organisation repose sur :",
+                    options: [
+                        "A. La division du travail et la coordination",
+                        "B. La hiérarchie seule",
+                        "C. L’organigramme",
+                        "D. Le leadership"
+                    ],
+                    correct: [0],
+                    explication: "Toute structure repose sur la division du travail et les mécanismes de coordination (Mintzberg)."
+                },
+                {
+                    id: 60,
+                    question: "Les ODD sont :",
+                    options: [
+                        "A. Les objectifs de développement durable",
+                        "B. Des organisations décentralisées",
+                        "C. Des indicateurs internes",
+                        "D. Des procédures économiques"
+                    ],
+                    correct: [0],
+                    explication: "Les ODD sont les 17 objectifs mondiaux pour un développement durable."
+                },
+                {
+                    id: 61,
+                    question: "L’organisation innovante :",
+                    options: [
+                        "A. Repose sur la créativité et la flexibilité",
+                        "B. Se base sur la hiérarchie",
+                        "C. Vise la stabilité",
+                        "D. Centralise les décisions"
+                    ],
+                    correct: [0],
+                    explication: "L'organisation innovante (adhocratie) favorise la créativité et l'adaptabilité."
+                },
+                {
+                    id: 62,
+                    question: "Le modèle de Blake et Mouton repose sur :",
+                    options: [
+                        "A. L’intérêt pour les hommes et les tâches",
+                        "B. La hiérarchie",
+                        "C. La centralisation",
+                        "D. Le profit"
+                    ],
+                    correct: [0],
+                    explication: "La grille managériale mesure la préoccupation pour les personnes et la production."
+                },
+                {
+                    id: 63,
+                    question: "La rentabilité correspond à :",
+                    options: [
+                        "A. La capacité à faire du profit",
+                        "B. La vitesse de production",
+                        "C. La performance sociale",
+                        "D. La valeur ajoutée"
+                    ],
+                    correct: [0],
+                    explication: "La rentabilité mesure la capacité à générer du profit par rapport aux ressources investies."
+                },
+                {
+                    id: 64,
+                    question: "L’université correspond à une organisation :",
+                    options: [
+                        "A. Professionnelle",
+                        "B. Divisionnelle",
+                        "C. Entrepreneuriale",
+                        "D. Politique"
+                    ],
+                    correct: [0],
+                    explication: "Les universités sont des bureaucraties professionnelles."
+                },
+                {
+                    id: 65,
+                    question: "Les associations peuvent :",
+                    options: [
+                        "A. Recevoir des subventions publiques",
+                        "B. Avoir un but lucratif",
+                        "C. Être cotées en bourse",
+                        "D. Être des sociétés anonymes"
+                    ],
+                    correct: [0],
+                    explication: "Les associations loi 1901 peuvent bénéficier de subventions publiques."
+                },
+                {
+                    id: 66,
+                    question: "Une structure fonctionnelle :",
+                    options: [
+                        "A. Repose sur la spécialisation par métier",
+                        "B. Sur la division géographique",
+                        "C. Sur les résultats",
+                        "D. Sur la rotation"
+                    ],
+                    correct: [0],
+                    explication: "La structure fonctionnelle organise par fonctions ou métiers."
+                },
+                {
+                    id: 67,
+                    question: "Une structure entrepreneuriale :",
+                    options: [
+                        "A. Dépend du dirigeant",
+                        "B. Est décentralisée",
+                        "C. Se base sur la polyvalence",
+                        "D. Possède plusieurs niveaux hiérarchiques"
+                    ],
+                    correct: [0],
+                    explication: "La structure entrepreneuriale est centralisée autour du dirigeant."
+                },
+                {
+                    id: 68,
+                    question: "Le sommet stratégique de Mintzberg :",
+                    options: [
+                        "A. Pilote la direction générale",
+                        "B. Contrôle les tâches",
+                        "C. Planifie les opérations",
+                        "D. Exécute la production"
+                    ],
+                    correct: [0],
+                    explication: "Le sommet stratégique est la haute direction qui pilote l'organisation."
+                },
+                {
+                    id: 69,
+                    question: "Une forte spécialisation horizontale :",
+                    options: [
+                        "A. Parcellise les tâches",
+                        "B. Encourage la flexibilité",
+                        "C. Décentralise",
+                        "D. Supprime la hiérarchie"
+                    ],
+                    correct: [0],
+                    explication: "Elle divise les tâches en petites unités spécialisées."
+                },
+                {
+                    id: 70,
+                    question: "Les entreprises du secteur public non marchand :",
+                    options: [
+                        "A. Ont une mission de service public",
+                        "B. Visent le profit",
+                        "C. Sont des associations lucratives",
+                        "D. Appartiennent à des particuliers"
+                    ],
+                    correct: [0],
+                    explication: "Elles fournissent des services publics sans objectif de profit."
+                },
+                {
+                    id: 71,
+                    question: "Le management opérationnel :",
+                    options: [
+                        "A. Met en œuvre les décisions stratégiques",
+                        "B. Concerne la politique générale",
+                        "C. S’exerce à long terme",
+                        "D. Détermine la structure"
+                    ],
+                    correct: [0],
+                    explication: "Le management opérationnel implémente les stratégies au quotidien."
+                },
+                {
+                    id: 72,
+                    question: "Dans la typologie de Stora, le manager narcissique :",
+                    options: [
+                        "A. Se place au centre et se croit invulnérable",
+                        "B. Est séducteur",
+                        "C. Est possessif",
+                        "D. Est entrepreneur"
+                    ],
+                    correct: [0],
+                    explication: "Le manager narcissique se voit comme centre et invulnérable (typologie des pervers)."
+                },
+                {
+                    id: 73,
+                    question: "Le modèle de Porter distingue :",
+                    options: [
+                        "A. Activités primaires et de soutien",
+                        "B. Activités centrales et périphériques",
+                        "C. Activités internes et externes",
+                        "D. Activités de croissance"
+                    ],
+                    correct: [0],
+                    explication: "La chaîne de valeur de Porter sépare activités primaires et de soutien."
+                },
+                {
+                    id: 74,
+                    question: "La structure organique correspond à :",
+                    options: [
+                        "A. Une adhocratie",
+                        "B. Une structure mécaniste",
+                        "C. Une structure rigide",
+                        "D. Une structure divisionnelle"
+                    ],
+                    correct: [0],
+                    explication: "La structure organique est flexible et correspond à l'adhocratie."
+                },
+                {
+                    id: 75,
+                    question: "L’ajustement mutuel est un mécanisme de coordination basé sur :",
+                    options: [
+                        "A. La communication directe",
+                        "B. La standardisation",
+                        "C. La supervision",
+                        "D. Le contrôle"
+                    ],
+                    correct: [0],
+                    explication: "L'ajustement mutuel repose sur la communication informelle entre employés."
+                },
+                {
+                    id: 76,
+                    question: "Les entreprises doivent, selon Lawrence et Lorsch, combiner :",
+                    options: [
+                        "A. Différenciation et intégration",
+                        "B. Division et spécialisation",
+                        "C. Centralisation et contrôle",
+                        "D. Planification et supervision"
+                    ],
+                    correct: [0],
+                    explication: "Pour gérer la complexité, différenciation (spécialisation) et intégration (coordination) sont nécessaires."
+                },
+                {
+                    id: 77,
+                    question: "La production discontinue est :",
+                    options: [
+                        "A. Fractionnée dans le temps et l’espace",
+                        "B. Continue",
+                        "C. Poussée",
+                        "D. Standardisée"
+                    ],
+                    correct: [0],
+                    explication: "La production discontinue est par lots ou unités, fractionnée."
+                },
+                {
+                    id: 78,
+                    question: "La phase de maturité d’un produit correspond à :",
+                    options: [
+                        "A. Une saturation du marché",
+                        "B. Une introduction",
+                        "C. Une croissance",
+                        "D. Un déclin"
+                    ],
+                    correct: [0],
+                    explication: "À la maturité, le marché est saturé, focus sur la défense de parts de marché."
+                },
+                {
+                    id: 79,
+                    question: "La supervision directe correspond à :",
+                    options: [
+                        "A. Un contrôle hiérarchique",
+                        "B. Une autonomie",
+                        "C. Une flexibilité",
+                        "D. Une décentralisation"
+                    ],
+                    correct: [0],
+                    explication: "La supervision directe est un mécanisme de coordination par contrôle hiérarchique."
+                },
+                {
+                    id: 80,
+                    question: "L’efficacité mesure :",
+                    options: [
+                        "A. Les résultats par rapport aux objectifs",
+                        "B. Les moyens utilisés",
+                        "C. La rentabilité",
+                        "D. La productivité"
+                    ],
+                    correct: [0],
+                    explication: "L'efficacité évalue l'atteinte des objectifs, tandis que l'efficience mesure l'utilisation des moyens."
+                }
+            ];
+
+            const [numQuestions, setNumQuestions] = useState(null);
+            const [questions, setQuestions] = useState([]);
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [selectedAnswers, setSelectedAnswers] = useState([]);
+            const [showExplanation, setShowExplanation] = useState(false);
+            const [score, setScore] = useState(0);
+            const [answeredQuestions, setAnsweredQuestions] = useState([]);
+            const [quizFinished, setQuizFinished] = useState(false);
+
+            const shuffleArray = (array) => {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                return shuffled;
+            };
+
+            const startQuiz = (num) => {
+                let selected = allQuestions;
+                if (num === 40) {
+                    selected = shuffleArray(allQuestions).slice(0, 40);
+                }
+                setQuestions(selected);
+                setNumQuestions(num);
+                setCurrentQuestion(0);
+                setSelectedAnswers([]);
+                setShowExplanation(false);
+                setScore(0);
+                setAnsweredQuestions([]);
+                setQuizFinished(false);
+            };
+
+            const handleAnswerClick = (index) => {
+                if (!showExplanation) {
+                    setSelectedAnswers([index]); // Single choice
+                }
+            };
+
+            const handleValidate = () => {
+                if (!showExplanation && selectedAnswers.length > 0) {
+                    const correctIndex = questions[currentQuestion].correct[0];
+                    let questionScore = selectedAnswers[0] === correctIndex ? 1 : 0;
+                    setScore(prev => prev + questionScore);
+                    setShowExplanation(true);
+                    setAnsweredQuestions([...answeredQuestions, {
+                        question: currentQuestion,
+                        score: questionScore
+                    }]);
+                }
+            };
+
+            const handleNextQuestion = () => {
+                if (currentQuestion < questions.length - 1) {
+                    setCurrentQuestion(currentQuestion + 1);
+                    setSelectedAnswers([]);
+                    setShowExplanation(false);
+                } else {
+                    setQuizFinished(true);
+                }
+            };
+
+            const handleRestart = () => {
+                setNumQuestions(null);
+            };
+
+            const getScoreColor = () => {
+                const percentage = (score / questions.length) * 100;
+                if (percentage >= 80) return 'text-green-600';
+                if (percentage >= 60) return 'text-blue-600';
+                if (percentage >= 40) return 'text-orange-600';
+                return 'text-red-600';
+            };
+
+            const getScoreMessage = () => {
+                const percentage = (score / questions.length) * 100;
+                if (percentage >= 80) return 'Excellent ! Vous maîtrisez parfaitement le cours.';
+                if (percentage >= 60) return 'Bon travail ! Quelques révisions vous permettront de perfectionner vos connaissances.';
+                if (percentage >= 40) return 'Pas mal, mais il faut encore travailler le cours.';
+                return 'Il faut revoir le cours en profondeur.';
+            };
+
+            const getFeedbackClass = (questionScore) => {
+                if (questionScore === 1) return 'bg-green-50 border-2 border-green-200';
+                return 'bg-red-50 border-2 border-red-200';
+            };
+
+            const getFeedbackText = (questionScore) => {
+                return questionScore === 1 ? 'Correct !' : 'Incorrect';
+            };
+
+            const getFeedbackIcon = (questionScore) => {
+                return questionScore === 1 ? <CheckIcon /> : <XIcon />;
+            };
+
+            const getFeedbackColor = (questionScore) => {
+                return questionScore === 1 ? 'text-green-600' : 'text-red-600';
+            };
+
+            if (numQuestions === null) {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+                        <div className="max-w-md w-full bg-white rounded-xl shadow-2xl p-8 text-center">
+                            <h1 className="text-3xl font-bold text-gray-800 mb-6">Organisation et Management — Partiel (QCM aléatoire)</h1>
+                            <p className="text-gray-600 mb-8">Choisissez le nombre de questions :</p>
+                            <div className="space-y-4">
+                                <button
+                                    onClick={() => startQuiz(40)}
+                                    className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                                >
+                                    40 questions (aléatoires)
+                                </button>
+                                <button
+                                    onClick={() => startQuiz(80)}
+                                    className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors font-semibold"
+                                >
+                                    80 questions (complètes)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (quizFinished) {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+                        <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-2xl p-8">
+                            <div className="text-center">
+                                <div className="text-yellow-500 mx-auto mb-6">
+                                    <AwardIcon />
+                                </div>
+                                <h2 className="text-3xl font-bold text-gray-800 mb-4">QCM Terminé !</h2>
+                                <div className={`text-6xl font-bold mb-4 ${getScoreColor()}`}>
+                                    {score}/{questions.length}
+                                </div>
+                                <p className="text-xl text-gray-600 mb-8">{getScoreMessage()}</p>
+                                
+                                <div className="bg-gray-50 rounded-lg p-6 mb-8">
+                                    <h3 className="font-semibold text-lg mb-4 text-gray-800">Résumé de vos réponses</h3>
+                                    <div className="space-y-2">
+                                        {answeredQuestions.map((answer, index) => (
+                                            <div key={index} className="flex items-center justify-between p-2 bg-white rounded">
+                                                <span className="text-gray-700">Question {index + 1}</span>
+                                                <div className={getFeedbackColor(answer.score)}>{getFeedbackIcon(answer.score)}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <button
+                                    onClick={handleRestart}
+                                    className="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors mx-auto text-lg font-semibold"
+                                >
+                                    <RefreshIcon />
+                                    Recommencer le QCM
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
+                    <div className="max-w-3xl mx-auto">
+                        <div className="bg-white rounded-xl shadow-2xl p-6 md:p-8">
+                            <div className="mb-6">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+                                        Organisation et Management
+                                    </h1>
+                                    <div className="text-right">
+                                        <div className="text-sm text-gray-500">Score</div>
+                                        <div className="text-2xl font-bold text-blue-600">{score}/{answeredQuestions.length}</div>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+                                    <span className="font-semibold">Question {currentQuestion + 1}</span>
+                                    <span className="text-gray-400">/</span>
+                                    <span>{questions.length}</span>
+                                </div>
+
+                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div 
+                                        className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                                        style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="mb-8">
+                                <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6">
+                                    {questions[currentQuestion].question}
+                                </h2>
+
+                                <div className="space-y-3">
+                                    {questions[currentQuestion].options.map((option, index) => {
+                                        let buttonClass = "w-full text-left p-4 rounded-lg border-2 transition-all flex items-center gap-3 ";
+                                        
+                                        const isSelected = selectedAnswers.includes(index);
+                                        const isCorrect = questions[currentQuestion].correct.includes(index);
+
+                                        if (!showExplanation) {
+                                            buttonClass += isSelected ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-blue-400 hover:bg-blue-50";
+                                        } else {
+                                            if (isSelected && isCorrect) {
+                                                buttonClass += "border-green-500 bg-green-50";
+                                            } else if (isSelected && !isCorrect) {
+                                                buttonClass += "border-red-500 bg-red-50";
+                                            } else if (!isSelected && isCorrect) {
+                                                buttonClass += "border-green-300 bg-green-50 opacity-75";
+                                            } else {
+                                                buttonClass += "border-gray-300 opacity-50";
+                                            }
+                                        }
+
+                                        return (
+                                            <button
+                                                key={index}
+                                                onClick={() => handleAnswerClick(index)}
+                                                disabled={showExplanation}
+                                                className={buttonClass}
+                                            >
+                                                <div className={`w-5 h-5 border-2 rounded ${isSelected ? 'bg-blue-500 border-blue-500' : 'border-gray-400'}`}>
+                                                    {isSelected && <CheckIcon className="w-5 h-5 text-white" />}
+                                                </div>
+                                                <span className="text-gray-800 flex-1">{option}</span>
+                                                {showExplanation && (
+                                                    <>
+                                                        {isSelected && isCorrect && <div className="text-green-600"><CheckIcon /></div>}
+                                                        {isSelected && !isCorrect && <div className="text-red-600"><XIcon /></div>}
+                                                        {!isSelected && isCorrect && <div className="text-green-600"><CheckIcon /></div>}
+                                                    </>
+                                                )}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {!showExplanation && (
+                                <button
+                                    onClick={handleValidate}
+                                    disabled={selectedAnswers.length === 0}
+                                    className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    Valider
+                                </button>
+                            )}
+
+                            {showExplanation && (
+                                <div className={`p-4 rounded-lg mb-6 ${getFeedbackClass(answeredQuestions[answeredQuestions.length - 1]?.score || 0)}`}>
+                                    <div className="flex items-start gap-3">
+                                        <div className={`${getFeedbackColor(answeredQuestions[answeredQuestions.length - 1]?.score || 0)} flex-shrink-0 mt-1`}>
+                                            {getFeedbackIcon(answeredQuestions[answeredQuestions.length - 1]?.score || 0)}
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold text-gray-800 mb-2">
+                                                {getFeedbackText(answeredQuestions[answeredQuestions.length - 1]?.score || 0)}
+                                            </p>
+                                            <p className="text-gray-700">{questions[currentQuestion].explication}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {showExplanation && (
+                                <button
+                                    onClick={handleNextQuestion}
+                                    className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg"
+                                >
+                                    {currentQuestion < questions.length - 1 ? 'Question suivante' : 'Voir les résultats'}
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<QCMOrganisation />, document.getElementById('root'));
+    </script>
+</body>
+</html>
+```
